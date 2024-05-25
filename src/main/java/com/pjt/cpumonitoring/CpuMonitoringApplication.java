@@ -26,17 +26,22 @@ public class CpuMonitoringApplication {
         SpringApplication.run(CpuMonitoringApplication.class, args);
     }
 
-    @Scheduled(fixedRate = 3000) // 60 seconds
+    @Scheduled(fixedRate = 1000) // 60 seconds
     public void monitorCpuUsage() {
         try {
             // CPU 사용률 조회
+            // CPU 사용률 0일 때는 DB에 저장되지 않음.
             OperatingSystemMXBean osBean = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
+
             double cpuLoad = osBean.getCpuLoad() * 100;
+            if (cpuLoad > 0) {
+                CpuUsage cpuUsage = new CpuUsage(null, cpuLoad, LocalDateTime.now());
+                CpuUsage saved = cpuUsageRepository.save(cpuUsage);
 
-            CpuUsage cpuUsage = new CpuUsage(null, cpuLoad, LocalDateTime.now());
-            CpuUsage saved = cpuUsageRepository.save(cpuUsage);
-
-            log.info("tp ==> {}",saved);
+//                log.info("tp ==> {}",saved);
+            } else {
+                log.info("cpu load is 0");
+            }
 
         } catch (Exception e) {
             System.out.println(e.toString());
