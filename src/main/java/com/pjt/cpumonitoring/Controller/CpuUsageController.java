@@ -1,15 +1,17 @@
 package com.pjt.cpumonitoring.Controller;
 
 import com.pjt.cpumonitoring.Service.CpuUsageService;
+import com.pjt.cpumonitoring.dto.CpuUsageForMinAvgMax;
 import com.pjt.cpumonitoring.entity.CpuUsage;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -22,39 +24,37 @@ public class CpuUsageController {
 
     private final CpuUsageService cpuUsageService;
 
-
     public CpuUsageController(CpuUsageService cpuUsageService) {
         this.cpuUsageService = cpuUsageService;
     }
 
     @GetMapping("/getMinuteData")
     @ResponseBody
-    public String getMinuteData(@RequestParam("startDate") LocalDateTime startDate,
-                                @RequestParam("endDate") LocalDateTime endDate) {
+    public ResponseEntity<?> getMinuteData(@RequestParam("startDate") LocalDateTime startDate,
+                                           @RequestParam("endDate") LocalDateTime endDate) {
         log.info("getMinuteData");
 
-        return cpuUsageService.getMinuteData(startDate, endDate).toString();
+        List<CpuUsage> getMinuteDataResult = cpuUsageService.getMinuteData(startDate, endDate);
+        return ResponseEntity.ok(getMinuteDataResult.toString());
     }
 
     @GetMapping("/getHourData")
     @ResponseBody
-    public String getHourData(@RequestParam("startDate") LocalDate startDate,
-                              @RequestParam("endDate") LocalDate endDate) {
-        log.info("getHourData");
+    public ResponseEntity<?> getHourData(@RequestParam("startDate") LocalDate startDate,
+                                         @RequestParam("endDate") LocalDate endDate) {
 
-        return cpuUsageService.getHourData(startDate, endDate).toString();
-
+        List<CpuUsageForMinAvgMax> getHourDataResult = cpuUsageService.getHourData(startDate, endDate);
+        return ResponseEntity.ok(getHourDataResult.toString());
     }
 
     @GetMapping("/getDayData")
     @ResponseBody
-    public String getDayData(@RequestParam("startDate") LocalDate startDate,
-                             @RequestParam("endDate") LocalDate endDate) {
+    public ResponseEntity<?> getDayData(@RequestParam("startDate") LocalDate startDate,
+                                        @RequestParam("endDate") LocalDate endDate) {
         log.info("getDayData");
 
-        return cpuUsageService.getDayData(startDate, endDate).toString();
-
+        List<CpuUsageForMinAvgMax> getDayDataResult = cpuUsageService.getDayData(startDate, endDate);
+        return ResponseEntity.ok(getDayDataResult.toString());
     }
-
-
 }
+
