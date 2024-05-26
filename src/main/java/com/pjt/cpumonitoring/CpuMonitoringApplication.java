@@ -38,7 +38,6 @@ public class CpuMonitoringApplication {
                 CpuUsage cpuUsage = new CpuUsage(null, cpuLoad, LocalDateTime.now());
                 CpuUsage saved = cpuUsageRepository.save(cpuUsage);
 
-//                log.info("tp ==> {}",saved);
             } else {
                 log.info("cpu load is 0");
             }

@@ -22,18 +22,38 @@ public class CpuUsageController {
 
     private final CpuUsageService cpuUsageService;
 
-    @Autowired
+
     public CpuUsageController(CpuUsageService cpuUsageService) {
         this.cpuUsageService = cpuUsageService;
     }
 
     @GetMapping("/getMinuteData")
     @ResponseBody
-    public String getMinuteData(@RequestParam LocalDateTime startDate,
-                                @RequestParam LocalDateTime endDate) {
+    public String getMinuteData(@RequestParam("startDate") LocalDateTime startDate,
+                                @RequestParam("endDate") LocalDateTime endDate) {
         log.info("getMinuteData");
 
         return cpuUsageService.getMinuteData(startDate, endDate).toString();
+    }
+
+    @GetMapping("/getHourData")
+    @ResponseBody
+    public String getHourData(@RequestParam("startDate") LocalDate startDate,
+                              @RequestParam("endDate") LocalDate endDate) {
+        log.info("getHourData");
+
+        return cpuUsageService.getHourData(startDate, endDate).toString();
+
+    }
+
+    @GetMapping("/getDayData")
+    @ResponseBody
+    public String getDayData(@RequestParam("startDate") LocalDate startDate,
+                             @RequestParam("endDate") LocalDate endDate) {
+        log.info("getDayData");
+
+        return cpuUsageService.getDayData(startDate, endDate).toString();
+
     }
 
 
