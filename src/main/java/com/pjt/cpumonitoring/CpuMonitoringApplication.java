@@ -2,6 +2,7 @@ package com.pjt.cpumonitoring;
 
 import com.pjt.cpumonitoring.entity.CpuUsage;
 import com.pjt.cpumonitoring.entity.ErrorLog;
+import com.pjt.cpumonitoring.repository.CpuUsageRepository;
 import com.pjt.cpumonitoring.repository.ErrorLogRepository;
 import com.sun.management.OperatingSystemMXBean;
 import lombok.extern.log4j.Log4j2;
@@ -18,10 +19,11 @@ import java.util.Arrays;
 @SpringBootApplication
 @EnableScheduling
 public class CpuMonitoringApplication {
-
+    private final CpuUsageRepository cpuUsageRepository;
     private final ErrorLogRepository errorLogRepository;
 
-    public CpuMonitoringApplication(ErrorLogRepository errorLogRepository) {
+    public CpuMonitoringApplication(CpuUsageRepository cpuUsageRepository, ErrorLogRepository errorLogRepository) {
+        this.cpuUsageRepository = cpuUsageRepository;
         this.errorLogRepository = errorLogRepository;
     }
 
@@ -40,7 +42,7 @@ public class CpuMonitoringApplication {
 
             CpuUsage cpuUsage = new CpuUsage(null, cpu_load, LocalDateTime.now());
             log.info("CpuUsage = {}", cpuUsage.toString());
-//                CpuUsage saved = cpuUsageRepository.save(cpuUsage);
+            // CpuUsage saved = cpuUsageRepository.save(cpuUsage);
 
         } catch (Exception e) {
             String errorMessage = e.toString() + "\t/\t" + Arrays.toString(e.getStackTrace());
