@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @OpenAPIDefinition(
         info = @Info(
                 title = "CpuMonitoring API Docs",
-                description = "api 명세 제작자: 이순민",
+                description = "API 명세서 제작자: 이순민",
                 version = "v1"
         )
 )
@@ -24,7 +24,7 @@ public class SwaggerConfig {
         String[] paths = {"/api/**"};
 
         return GroupedOpenApi.builder()
-                .group("COUPLE API v1")
+                .group("CpuMonitoring API v1")
                 .pathsToMatch(paths)
                 .build();
     }

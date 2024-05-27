@@ -1,4 +1,4 @@
-package com.pjt.cpumonitoring.Service;
+package com.pjt.cpumonitoring.service;
 
 
 import com.pjt.cpumonitoring.dto.CpuUsageForMinAvgMax;
@@ -13,7 +13,7 @@ import java.util.List;
 
 @Log4j2
 @Service
-public class CpuUsageService {
+public class CpuUsageService implements CpuUsageServiceImpl {
 
     private final CpuUsageRepository cpuUsageRepository;
 
@@ -34,6 +34,7 @@ public class CpuUsageService {
         }
 
         return cpuUsageRepository.findByTimestampBetween(startDate, endDate);
+
     }
 
     public List<CpuUsageForMinAvgMax> getHourData(LocalDate startDate, LocalDate endDate) {

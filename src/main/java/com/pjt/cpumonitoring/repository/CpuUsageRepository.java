@@ -14,16 +14,14 @@ import java.util.List;
 public interface CpuUsageRepository extends CrudRepository<CpuUsage, Long> {
     List<CpuUsage> findByTimestampBetween(LocalDateTime startDate, LocalDateTime endDate);
 
-
-    @Query("SELECT NEW com.pjt.cpumonitoring.dto.CpuUsageForMinAvgMax(MIN(c.cpuLoad), AVG(c.cpuLoad), MAX(c.cpuLoad)) " +
+    @Query("SELECT NEW com.pjt.cpumonitoring.dto.CpuUsageForMinAvgMax(MIN(c.cpu_load), AVG(c.cpu_load), MAX(c.cpu_load)) " +
             "FROM CpuUsage c " +
             "WHERE c.timestamp BETWEEN :startDate AND :endDate " +
             "GROUP BY HOUR(c.timestamp)")
     List<CpuUsageForMinAvgMax> findCpuUsageStatsPerHour(@Param("startDate") LocalDateTime startOfDay,
                                                         @Param("endDate") LocalDateTime endOfDay);
 
-
-    @Query("SELECT NEW com.pjt.cpumonitoring.dto.CpuUsageForMinAvgMax(MIN(c.cpuLoad), AVG(c.cpuLoad), MAX(c.cpuLoad)) " +
+    @Query("SELECT NEW com.pjt.cpumonitoring.dto.CpuUsageForMinAvgMax(MIN(c.cpu_load), AVG(c.cpu_load), MAX(c.cpu_load)) " +
             "FROM CpuUsage c " +
             "WHERE c.timestamp BETWEEN :startDate AND :endDate " +
             "GROUP BY DAY(c.timestamp)")

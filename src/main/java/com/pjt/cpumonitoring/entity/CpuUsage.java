@@ -1,10 +1,12 @@
 package com.pjt.cpumonitoring.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Data
 public class CpuUsage {
 
     @Id
@@ -12,7 +14,7 @@ public class CpuUsage {
     private Long id;
 
     @Column
-    private double cpuLoad;
+    private double cpu_load;
     @Column
     private LocalDateTime timestamp;
 
@@ -20,20 +22,20 @@ public class CpuUsage {
         // 기본 생성자
     }
 
-    public CpuUsage(Long id, double cpuLoad, LocalDateTime timestamp) {
+    public CpuUsage(Long id, double cpu_load, LocalDateTime timestamp) {
         this.id = id;
-        this.cpuLoad = cpuLoad;
+        this.cpu_load = cpu_load;
         this.timestamp = timestamp;
     }
+
 
     @Override
     public String toString() {
         return "CpuUsage{" +
                 "id=" + id +
-                ", cpuLoad=" + cpuLoad +
+                ", cpu_load=" + cpu_load +
                 ", timestamp=" + timestamp +
                 '}';
     }
-
 
 }
